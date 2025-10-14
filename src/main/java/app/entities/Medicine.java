@@ -2,9 +2,16 @@ package app.entities;
 
 import Security.entities.User;
 import jakarta.persistence.*;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.List;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Builder
 
 @Entity
 public class Medicine {
