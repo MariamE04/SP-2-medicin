@@ -15,7 +15,7 @@ public class MedicineLogDTO {
     private double dose;
     private LocalDateTime takenAt;
     private String username;
-    private String medicineName;
+    private String medicineName; //TODO: find ud af om det skal være Medicine eller string
 
     public MedicineLogDTO(int id, double dose, LocalDateTime takenAt, String username, String medicineName) {
         this.id = id;

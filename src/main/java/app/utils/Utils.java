@@ -8,6 +8,8 @@ import java.util.Properties;
 
 public class Utils {
 
+    //// TODO: lave metode Utils().getObjectMapper();
+
     public static String getPropertyValue(String propName, String resourceName)  {
         try (InputStream is = Utils.class.getClassLoader().getResourceAsStream(resourceName)) {
             Properties prop = new Properties();

@@ -114,4 +114,8 @@ public class MedicineController {
 
     }
 
+    /// TODO: getMedicineLogs -Hent alle logs for den medicin
+
+    /// TODO: addMedicineLog -Tilføj log til den medicin
+
 }
