@@ -1,0 +1,33 @@
+@startuml
+class Medicine{
+-int id
+-String name
+-String type
+-String symptomDescription
+-List<MedicineLog> logs
+-User user
+}
+
+class MedicineLog{
+-int id
+-double dose
+-LocalDateTime takenAt
+-User user
+-Medicine medicine
+}
+
+class User{
+-int id
+-String username
+-String password
+-Set<Role> roles
+-List<MedicineLog> logs
+-List<Medicine> medicines
+}
+
+class Roles{
+-String rolename
+-Set<User> users
+}
+
+@enduml
