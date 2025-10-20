@@ -163,6 +163,15 @@
             <version>${restassured.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <!--- token -->
+
+        <dependency>
+            <groupId>com.github.Hartmannsolution</groupId>
+            <artifactId>TokenSecurity</artifactId>
+            <version>${token.security.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
