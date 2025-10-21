@@ -74,4 +74,13 @@ public class MedicineLogDAO implements IDAO<MedicineLog, Integer> {
             }
         }
     }
+
+    public List<MedicineLog> getByUsername(String username) {
+        try (var em = emf.createEntityManager()) {
+            return em.createQuery("SELECT l FROM MedicineLog l WHERE l.user.username = :username", MedicineLog.class)
+                    .setParameter("username", username)
+                    .getResultList();
+        }
+    }
+
 }

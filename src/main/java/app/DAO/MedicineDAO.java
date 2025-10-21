@@ -70,4 +70,23 @@ public class MedicineDAO implements IDAO<Medicine, Integer> {
         }
     }
 
+    public List<Medicine> getByUsername(String username) {
+        try (EntityManager em = emf.createEntityManager()) {
+            return em.createQuery("SELECT m FROM Medicine m WHERE m.user.username = :username", Medicine.class)
+                    .setParameter("username", username)
+                    .getResultList();
+        }
+    }
+
+    public Medicine getByName(String name) {
+        try (EntityManager em = emf.createEntityManager()) {
+            return em.createQuery(
+                            "SELECT m FROM Medicine m WHERE m.name = :name", Medicine.class)
+                    .setParameter("name", name)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
 }

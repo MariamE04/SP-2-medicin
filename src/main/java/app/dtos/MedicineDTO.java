@@ -1,8 +1,10 @@
 package app.dtos;
 
 import app.entities.MedicineLog;
+import dk.bugelhartmann.UserDTO;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -16,6 +18,8 @@ public class MedicineDTO {
     private String type;
     private String symptomDescription;
     private List<Integer> logIds;
+    private UserDTO user;
+
 
     public MedicineDTO(int id, String name, String type, String symptomDescription) {
         this.id = id;

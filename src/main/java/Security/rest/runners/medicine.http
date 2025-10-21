@@ -6,6 +6,7 @@ GET http://localhost:7007/api/medicineTracker/
 ### Create medicine
 POST http://localhost:7007/api/medicineTracker/medicines
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIk1hcmlhbSBFbG1pclwiIiwic3ViIjoibWFyaWFtIiwiZXhwIjoxNzYxMDY3NjI2LCJyb2xlcyI6IlVTRVIiLCJ1c2VybmFtZSI6Im1hcmlhbSJ9.u1ppEigCRzEi-rKQDA9oEoI7lvmhf7B_2KVZFXdL5WQ
 
 {
   "name": "Panodil",
@@ -17,28 +18,32 @@ Content-Type: application/json
 ###
 
 ### Get all medicines
-GET http://localhost:7007/api/medicineTracker/medicines
+GET http://{{url}}/api/medicineTracker/medicines
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIk1hcmlhbSBFbG1pclwiIiwic3ViIjoibWFyaWFtIiwiZXhwIjoxNzYxMDY3NjI2LCJyb2xlcyI6IlVTRVIiLCJ1c2VybmFtZSI6Im1hcmlhbSJ9.u1ppEigCRzEi-rKQDA9oEoI7lvmhf7B_2KVZFXdL5WQ
 
 ###
 
 ### Get medicine by id
 GET http://localhost:7007/api/medicineTracker/medicines/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIk1hcmlhbSBFbG1pclwiIiwic3ViIjoibWFyaWFtIiwiZXhwIjoxNzYxMDY3NjI2LCJyb2xlcyI6IlVTRVIiLCJ1c2VybmFtZSI6Im1hcmlhbSJ9.u1ppEigCRzEi-rKQDA9oEoI7lvmhf7B_2KVZFXdL5WQ
 
 ###
 
 ### delete medicine by id
-DELETE http://localhost:7007/api/medicineTracker/medicines/2
-
+DELETE http://localhost:7007/api/medicineTracker/medicines/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIk1hcmlhbSBFbG1pclwiIiwic3ViIjoibWFyaWFtIiwiZXhwIjoxNzYxMDY4NTI5LCJyb2xlcyI6IlVTRVIiLCJ1c2VybmFtZSI6Im1hcmlhbSJ9.ZDzovItUpBZn25yHM6XHWTAO0T5bPvzkYc6VcWJG8Kg
 ###
 
 ### delete medicine by id
-GET http://localhost:7007/api/medicineTracker/medicines/2
+GET http://localhost:7007/api/medicineTracker/medicines/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIk1hcmlhbSBFbG1pclwiIiwic3ViIjoibWFyaWFtIiwiZXhwIjoxNzYxMDY4NTI5LCJyb2xlcyI6IlVTRVIiLCJ1c2VybmFtZSI6Im1hcmlhbSJ9.ZDzovItUpBZn25yHM6XHWTAO0T5bPvzkYc6VcWJG8Kg
 
 ###
 
 ### Update medicine by ID
 PUT http://localhost:7007/api/medicineTracker/medicines/1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIk1hcmlhbSBFbG1pclwiIiwic3ViIjoibWFyaWFtIiwiZXhwIjoxNzYxMDY4NTI5LCJyb2xlcyI6IlVTRVIiLCJ1c2VybmFtZSI6Im1hcmlhbSJ9.ZDzovItUpBZn25yHM6XHWTAO0T5bPvzkYc6VcWJG8Kg
 
 {
   "name": "Sertralin test",
@@ -54,6 +59,7 @@ Content-Type: application/json
 ### Create medicineLog
 POST http://localhost:7007/api/medicineTracker/medicineLog
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIk1hcmlhbSBFbG1pclwiIiwic3ViIjoibWFyaWFtIiwiZXhwIjoxNzYxMDY4NTI5LCJyb2xlcyI6IlVTRVIiLCJ1c2VybmFtZSI6Im1hcmlhbSJ9.ZDzovItUpBZn25yHM6XHWTAO0T5bPvzkYc6VcWJG8Kg
 
 {
   "dose": 25.0,
@@ -66,27 +72,34 @@ Content-Type: application/json
 
 ### Get all medicineLogs
 GET http://localhost:7007/api/medicineTracker/medicineLog
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIk1hcmlhbSBFbG1pclwiIiwic3ViIjoibWFyaWFtIiwiZXhwIjoxNzYxMDY4NTI5LCJyb2xlcyI6IlVTRVIiLCJ1c2VybmFtZSI6Im1hcmlhbSJ9.ZDzovItUpBZn25yHM6XHWTAO0T5bPvzkYc6VcWJG8Kg
 
 ###
 
 ### Get medicineLog by id
 GET http://localhost:7007/api/medicineTracker/medicineLog/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIk1hcmlhbSBFbG1pclwiIiwic3ViIjoibWFyaWFtIiwiZXhwIjoxNzYxMDY4NTI5LCJyb2xlcyI6IlVTRVIiLCJ1c2VybmFtZSI6Im1hcmlhbSJ9.ZDzovItUpBZn25yHM6XHWTAO0T5bPvzkYc6VcWJG8Kg
 
 ###
 
 ### delete medicineLog by id
-DELETE http://localhost:7007/api/medicineTracker/medicineLog/2
+DELETE http://localhost:7007/api/medicineTracker/medicineLog/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIk1hcmlhbSBFbG1pclwiIiwic3ViIjoibWFyaWFtIiwiZXhwIjoxNzYxMDY4NTI5LCJyb2xlcyI6IlVTRVIiLCJ1c2VybmFtZSI6Im1hcmlhbSJ9.ZDzovItUpBZn25yHM6XHWTAO0T5bPvzkYc6VcWJG8Kg
 
 ###
 
 ### delete medicineLog by id
-GET http://localhost:7007/api/medicineTracker/medicineLog/2
+GET http://localhost:7007/api/medicineTracker/medicineLog/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIk1hcmlhbSBFbG1pclwiIiwic3ViIjoibWFyaWFtIiwiZXhwIjoxNzYxMDY4NTI5LCJyb2xlcyI6IlVTRVIiLCJ1c2VybmFtZSI6Im1hcmlhbSJ9.ZDzovItUpBZn25yHM6XHWTAO0T5bPvzkYc6VcWJG8Kg
+
 
 ###
 
 ### Update medicineLog by ID
 PUT http://localhost:7007/api/medicineTracker/medicineLog/1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIk1hcmlhbSBFbG1pclwiIiwic3ViIjoibWFyaWFtIiwiZXhwIjoxNzYxMDY4NTI5LCJyb2xlcyI6IlVTRVIiLCJ1c2VybmFtZSI6Im1hcmlhbSJ9.ZDzovItUpBZn25yHM6XHWTAO0T5bPvzkYc6VcWJG8Kg
+
 
 {
   "dose": 30.0,

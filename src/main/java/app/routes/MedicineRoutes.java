@@ -1,5 +1,6 @@
 package app.routes;
 
+import Security.enums.Role;
 import app.controllers.MedicineController;
 import io.javalin.apibuilder.EndpointGroup;
 
@@ -10,12 +11,12 @@ public class MedicineRoutes {
 
    public EndpointGroup getRoutes() {
         return () -> {
-            get(medicineController::getAllMedicine);
-            post(medicineController::createMedicine);
+            get(medicineController::getAllMedicine, Role.USER, Role.ADMIN);
+            post(medicineController::createMedicine, Role.USER);
             path("/{id}", () -> {
-                get(medicineController::getById);
-                put(medicineController::updateMedicine);
-                delete(medicineController::medicineToDelete);
+                get(medicineController::getById, Role.USER, Role.ADMIN);
+                put(medicineController::updateMedicine, Role.USER);
+                delete(medicineController::medicineToDelete, Role.USER);
         });
         };
     }

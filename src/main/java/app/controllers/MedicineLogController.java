@@ -24,27 +24,51 @@ public class MedicineLogController {
 
     // Get all logs (evt. kun for én bruger)
     public void getAllLogs(Context ctx) {
-        List<MedicineLog> medicineLogList = medicineLogDAO.getAll();
-        List<MedicineLogDTO> medicineLogDTOS = medicineLogList.stream().map(MedicineLogMapper::toDTO).toList();
-        ctx.status(HttpStatus.OK);
-        ctx.json(medicineLogDTOS);
-    }
+        UserDTO userDTO = ctx.attribute("user");
+        if (userDTO == null) {
+            ctx.status(HttpStatus.UNAUTHORIZED).result("User not authenticated");
+            return;
+        }
 
+        List<MedicineLog> logs;
+        if (userDTO.getRoles().contains("ADMIN")) {
+            logs = medicineLogDAO.getAll();
+        } else {
+            logs = medicineLogDAO.getByUsername(userDTO.getUsername());
+        }
+
+        ctx.json(logs.stream().map(MedicineLogMapper::toDTO).toList());
+        ctx.status(HttpStatus.OK);
+    }
     // Get logs for a specific medicine
     public void getLogsByMedicine(Context ctx) {
-        int id = Integer.parseInt(ctx.pathParam("id"));
-        MedicineLog medicineLog = medicineLogDAO.getById(id);
-        if(medicineLog != null){
-            ctx.status(200);
-            ctx.json(MedicineLogMapper.toDTO(medicineLog));
-        } else {
-            ctx.status(HttpStatus.NOT_FOUND);
-            ctx.result("MedicineLog not found");
+        UserDTO userDTO = ctx.attribute("user");
+        if (userDTO == null) {
+            ctx.status(HttpStatus.UNAUTHORIZED).result("User not authenticated");
+            return;
         }
+
+        int id = Integer.parseInt(ctx.pathParam("id"));
+        MedicineLog log = medicineLogDAO.getById(id);
+
+        if (log == null) {
+            ctx.status(HttpStatus.NOT_FOUND).result("MedicineLog not found");
+            return;
+        }
+
+        // Kun ADMIN eller ejer må se loggen
+        if (!userDTO.getRoles().contains("ADMIN") &&
+                !log.getUser().getUsername().equals(userDTO.getUsername())) {
+            ctx.status(HttpStatus.FORBIDDEN).result("Access denied");
+            return;
+        }
+
+        ctx.status(HttpStatus.OK).json(MedicineLogMapper.toDTO(log));
     }
 
     // Create a log
     public void createLog(Context ctx) {
+        // Hent den loggede bruger
         UserDTO userDTO = ctx.attribute("user");
         if (userDTO == null) {
             ctx.status(HttpStatus.UNAUTHORIZED);
@@ -52,16 +76,17 @@ public class MedicineLogController {
             return;
         }
 
-        int medicineId = Integer.parseInt(ctx.pathParam("medicineId"));
-        Medicine medicine = medicineDAO.getById(medicineId);
+        // Hent DTO fra JSON-body
+        MedicineLogDTO dto = ctx.bodyAsClass(MedicineLogDTO.class);
 
+        // Hent medicinen via navn fra body
+        Medicine medicine = medicineDAO.getByName(dto.getMedicineName());
         if (medicine == null) {
-            ctx.status(HttpStatus.NOT_FOUND);
-            ctx.result("Medicine not found");
+            ctx.status(HttpStatus.NOT_FOUND).result("Medicine not found");
             return;
         }
 
-        MedicineLogDTO dto = ctx.bodyAsClass(MedicineLogDTO.class);
+        // Opret log
         MedicineLog log = MedicineLog.builder()
                 .dose(dto.getDose())
                 .takenAt(dto.getTakenAt())
@@ -69,48 +94,72 @@ public class MedicineLogController {
                 .medicine(medicine)
                 .build();
 
+        // Gem log i DB
         MedicineLog saved = medicineLogDAO.create(log);
+
+        // Returnér gemt log som DTO
         ctx.status(HttpStatus.CREATED).json(MedicineLogMapper.toDTO(saved));
     }
 
 
     // Update a log (fx ændre dosis)
     public void updateLog(Context ctx) {
-     try {
-
-        int id = Integer.parseInt(ctx.pathParam("id"));
-        MedicineLogDTO medicineLogDTO = ctx.bodyAsClass(MedicineLogDTO.class);
-
-        MedicineLog existingMedicinLog = medicineLogDAO.getById(id);
-        if (existingMedicinLog == null) {
-            ctx.status(HttpStatus.NOT_FOUND);
-            ctx.result("Medicine not found");
+        UserDTO userDTO = ctx.attribute("user");
+        if (userDTO == null) {
+            ctx.status(HttpStatus.UNAUTHORIZED).result("User not authenticated");
             return;
         }
 
-        existingMedicinLog.setDose(medicineLogDTO.getDose());
-        existingMedicinLog.setTakenAt(medicineLogDTO.getTakenAt());
+        int id = Integer.parseInt(ctx.pathParam("id"));
+        MedicineLog existingLog = medicineLogDAO.getById(id);
 
-        MedicineLog updated = medicineLogDAO.update(existingMedicinLog);
-         ctx.status(HttpStatus.OK);
-         ctx.json(MedicineLogMapper.toDTO(updated));
-        } catch (Exception e){
-             throw new IllegalStateException("Invalid JSON input: " + e.getMessage(), e);
-     }
+        if (existingLog == null) {
+            ctx.status(HttpStatus.NOT_FOUND).result("MedicineLog not found");
+            return;
+        }
 
+        // Tjek ejer
+        if (!userDTO.getRoles().contains("ADMIN") &&
+                !existingLog.getUser().getUsername().equals(userDTO.getUsername())) {
+            ctx.status(HttpStatus.FORBIDDEN).result("You cannot edit someone else's log");
+            return;
+        }
+
+        MedicineLogDTO dto = ctx.bodyAsClass(MedicineLogDTO.class);
+        existingLog.setDose(dto.getDose());
+        existingLog.setTakenAt(dto.getTakenAt());
+
+        MedicineLog updated = medicineLogDAO.update(existingLog);
+        ctx.status(HttpStatus.OK).json(MedicineLogMapper.toDTO(updated));
     }
 
     // Delete a log
     public void deleteLog(Context ctx) {
-        int id = Integer.parseInt(ctx.pathParam("id"));
-        boolean delete = medicineLogDAO.delete(id);
+        UserDTO userDTO = ctx.attribute("user");
+        if (userDTO == null) {
+            ctx.status(HttpStatus.UNAUTHORIZED).result("User not authenticated");
+            return;
+        }
 
-        if(delete){
-            ctx.result("MedicineLog with id " + id + " deleted");
+        int id = Integer.parseInt(ctx.pathParam("id"));
+        MedicineLog log = medicineLogDAO.getById(id);
+
+        if (log == null) {
+            ctx.status(HttpStatus.NOT_FOUND).result("MedicineLog not found");
+            return;
+        }
+
+        if (!userDTO.getRoles().contains("ADMIN") &&
+                !log.getUser().getUsername().equals(userDTO.getUsername())) {
+            ctx.status(HttpStatus.FORBIDDEN).result("You cannot delete someone else's log");
+            return;
+        }
+
+        boolean deleted = medicineLogDAO.delete(id);
+        if (deleted) {
             ctx.status(HttpStatus.NO_CONTENT);
         } else {
-            ctx.result("Medicine not found");
-            ctx.status(HttpStatus.NOT_FOUND);
+            ctx.status(HttpStatus.INTERNAL_SERVER_ERROR).result("Failed to delete");
         }
     }
 

@@ -1,5 +1,6 @@
 package app.routes;
 
+import Security.enums.Role;
 import app.controllers.MedicineLogController;
 import io.javalin.apibuilder.EndpointGroup;
 
@@ -11,12 +12,12 @@ public class MedicineLogRoutes {
 
     public EndpointGroup getRoutes() {
         return () -> {
-            get(medicineLogController::getAllLogs);
-            post(medicineLogController::createLog);
+            get(medicineLogController::getAllLogs, Role.USER, Role.ADMIN);
+            post(medicineLogController::createLog, Role.USER);
             path("/{id}", () -> {
-                get(medicineLogController::getLogsByMedicine);
-                put(medicineLogController::updateLog);
-                delete(medicineLogController::deleteLog);
+                get(medicineLogController::getLogsByMedicine, Role.USER, Role.ADMIN);
+                put(medicineLogController::updateLog, Role.USER);
+                delete(medicineLogController::deleteLog, Role.USER);
             });
         };
     }
