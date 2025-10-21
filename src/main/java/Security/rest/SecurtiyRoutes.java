@@ -10,17 +10,18 @@ public class SecurtiyRoutes {
     ISecurityController securityController = new SecurityController();
     private static ObjectMapper jsonMapper = new Utils().getObjectMapper();
 
-    public EndpointGroup getSecurityRoute = () -> {
-        path("/auth", ()->
-                post("/login", securityController.login()));
-    };
+    public EndpointGroup getOpenRoutes() {
+        return () -> {
+            post("/login", securityController.login());
+            post("/register", securityController.register());
+
+        };
+    }
 
     public EndpointGroup getSecuredRoutes(){
         return ()->{
-            path("/protected", ()->{
                 get("/user_demo",(ctx)->ctx.json(jsonMapper.createObjectNode().put("msg",  "Hello from USER Protected")),Role.USER);
                 get("/admin_demo",(ctx)->ctx.json(jsonMapper.createObjectNode().put("msg",  "Hello from ADMIN Protected")),Role.ADMIN);
-            });
         };
     }
 }

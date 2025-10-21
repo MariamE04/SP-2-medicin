@@ -77,6 +77,10 @@ public class HibernateConfig {
         }
     }
 
+    private static String getDBName() {
+        return Utils.getPropertyValue("db.name", "from-pom.properties");
+    }
+
     private static Properties setBaseProperties(Properties props) {
         props.put("hibernate.connection.driver_class", "org.postgresql.Driver");
         props.put("hibernate.hbm2ddl.auto", "create");  // set to "update" when in production
@@ -95,16 +99,12 @@ public class HibernateConfig {
         return props;
     }
 
-    private static Properties setDevProperties(Properties props) {
-        String DBName = Utils.getPropertyValue("DB_NAME", "config.properties");
-        String DB_USERNAME = Utils.getPropertyValue("DB_USERNAME", "config.properties");
-        String DB_PASSWORD = Utils.getPropertyValue("DB_PASSWORD", "config.properties");
-        props.put("hibernate.connection.url", "jdbc:postgresql://localhost:5432/" + DBName);
-        props.put("hibernate.connection.username", DB_USERNAME);
-        props.put("hibernate.connection.password", DB_PASSWORD);
+    private static Properties setDevProperties(Properties props){
+        props.put("hibernate.connection.url", "jdbc:postgresql://localhost:5432/"+ getDBName());
+        props.put("hibernate.connection.username", "postgres");
+        props.put("hibernate.connection.password", "postgres");
         return props;
     }
-
     private static Properties setTestProperties(Properties props) {
         props.put("hibernate.connection.driver_class", "org.testcontainers.jdbc.ContainerDatabaseDriver");
         props.put("hibernate.connection.url", "jdbc:tc:postgresql:16.2:///test_db");

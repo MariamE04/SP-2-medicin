@@ -19,8 +19,9 @@
         <jbcrypt.version>0.4</jbcrypt.version>
         <token.security.version>1.0.2</token.security.version>
 
-        <!--  Javalin    -->
-        <javalin.port>7070</javalin.port>
+        <!-- DATABASE PROJECT NAME ON SERVER  -->
+        <db.name>medicine</db.name>
+        <javalin.port>7007</javalin.port>
     </properties>
 
     <repositories>

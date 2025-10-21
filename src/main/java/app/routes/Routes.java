@@ -20,7 +20,8 @@ public class Routes {
             // endpoints
             path("/medicines", medicineRoutes.getRoutes());
             path("/medicineLog", medicineLogRoutes.getRoutes());
-            path("/security", securtiyRoutes::getSecuredRoutes);
+            path("/auth", securtiyRoutes.getOpenRoutes());
+            path("/protected", securtiyRoutes.getSecuredRoutes());
         };
     }
 }

@@ -97,3 +97,47 @@ Content-Type: application/json
 
 # =========================
 ### User Tests
+
+### Security
+POST http://{{url}}/api/medicineTracker/auth/login
+Content-Type: application/json
+
+{
+  "username": "mariam",
+  "password": "1234"
+}
+
+
+###
+GET http://{{url}}/api/medicineTracker/protected/user_demo
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIk1hcmlhbSBFbG1pclwiIiwic3ViIjoibWFyaWFtIiwiZXhwIjoxNzYxMDQ4OTU4LCJyb2xlcyI6IlVTRVIiLCJ1c2VybmFtZSI6Im1hcmlhbSJ9.hE6afPyxjHtAfxzhCCZyjZfrb5u-LQngz44nZIlbGKQ
+
+### registere
+POST http://{{url}}/api/medicineTracker/auth/register
+Content-Type: application/json
+
+{
+  "username": "test",
+  "password": "1234"
+}
+
+###
+
+### logger ind med den registeret bruger
+POST http://localhost:7007/api/medicineTracker/auth/login
+Content-Type: application/json
+
+{
+  "username": "test",
+  "password": "1234"
+}
+
+
+###
+
+### tjekker om det valid
+GET http://{{url}}/api/medicineTracker/protected/user_demo
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIk1hcmlhbSBFbG1pclwiIiwic3ViIjoidGVzdCIsImV4cCI6MTc2MTA0OTA1NSwicm9sZXMiOiJVc2VyIiwidXNlcm5hbWUiOiJ0ZXN0In0.ESMsOXv-vizV1sGY2oE-LEFwhhCHUKjQH5nCH5iVYWI
+
+
+###
