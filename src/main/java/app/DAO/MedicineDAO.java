@@ -1,9 +1,11 @@
 package app.DAO;
 
+import Security.entities.User;
 import app.config.HibernateConfig;
 import app.entities.Medicine;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.NoResultException;
 
 import java.util.List;
 
@@ -15,7 +17,7 @@ public class MedicineDAO implements IDAO<Medicine, Integer> {
     }
 
     @Override
-    public Medicine creat(Medicine medicine) {
+    public Medicine create(Medicine medicine) {
         try(EntityManager em = emf.createEntityManager()){
             em.getTransaction().begin();
             em.persist(medicine);
@@ -67,4 +69,5 @@ public class MedicineDAO implements IDAO<Medicine, Integer> {
             }
         }
     }
+
 }

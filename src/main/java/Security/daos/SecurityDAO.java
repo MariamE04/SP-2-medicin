@@ -8,6 +8,7 @@ import app.config.HibernateConfig;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.NoResultException;
 
 public class SecurityDAO implements ISecurityDAO {
 
@@ -77,6 +78,17 @@ public class SecurityDAO implements ISecurityDAO {
             return foundUser;
         }
     }
+
+    public User getUserByUsername(String username) {
+        try (EntityManager em = emf.createEntityManager()) {
+            return em.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
+                    .setParameter("username", username)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
 
     public static void main(String[] args) throws EntityNotFoundException {
         ISecurityDAO dao= new SecurityDAO(HibernateConfig.getEntityManagerFactory());

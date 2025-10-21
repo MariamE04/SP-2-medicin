@@ -13,7 +13,7 @@ public class MedicineLogDAO implements IDAO<MedicineLog, Integer> {
     }
 
     @Override
-    public MedicineLog creat(MedicineLog log) {
+    public MedicineLog create(MedicineLog log) {
         try (EntityManager em = emf.createEntityManager()) {
             em.getTransaction().begin();
             em.persist(log);

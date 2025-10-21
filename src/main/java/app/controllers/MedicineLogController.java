@@ -1,24 +1,26 @@
 package app.controllers;
 
+import Security.daos.SecurityDAO;
+import app.DAO.MedicineDAO;
 import app.DAO.MedicineLogDAO;
 import app.config.HibernateConfig;
-import app.dtos.MedicineDTO;
 import app.dtos.MedicineLogDTO;
+import app.entities.Medicine;
 import app.entities.MedicineLog;
 import app.mappers.MedicineLogMapper;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import dk.bugelhartmann.UserDTO;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
 import jakarta.persistence.EntityManagerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MedicineLogController {
 
     private static final EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
     private MedicineLogDAO medicineLogDAO = new MedicineLogDAO(emf);
+    private MedicineDAO medicineDAO = new MedicineDAO(emf);
+    private SecurityDAO securityDAO = new SecurityDAO(emf);
 
     // Get all logs (evt. kun for én bruger)
     public void getAllLogs(Context ctx) {
@@ -43,39 +45,34 @@ public class MedicineLogController {
 
     // Create a log
     public void createLog(Context ctx) {
-        String body = ctx.body().trim();
-        ObjectMapper mapper = new ObjectMapper();
-
-        try{
-            List<MedicineLogDTO> dtos;
-
-            if(body.startsWith("[")){
-                dtos = mapper.readValue(body, new TypeReference<List<MedicineLogDTO>>() {
-                });
-            } else {
-                dtos = List.of(mapper.readValue(body, MedicineLogDTO.class));
-            }
-
-            List<MedicineLogDTO> saved = new ArrayList<>();
-            for(MedicineLogDTO dto: dtos){
-                MedicineLog medicineLog = MedicineLog.builder()
-                        .dose(dto.getDose())
-                        .takenAt(dto.getTakenAt())
-                        .build();
-
-                MedicineLog persistedMedicineLog = medicineLogDAO.creat(medicineLog);
-                saved.add(MedicineLogMapper.toDTO(persistedMedicineLog));
-            }
-            if (saved.size() == 1) {
-                ctx.status(201).json(saved.get(0));
-            } else {
-                ctx.status(201).json(saved);
-            }
-
-        }catch (Exception e) {
-            throw new IllegalStateException("Invalid JSON input: " + e.getMessage(), e);
+        UserDTO userDTO = ctx.attribute("user");
+        if (userDTO == null) {
+            ctx.status(HttpStatus.UNAUTHORIZED);
+            ctx.result("User not authenticated");
+            return;
         }
+
+        int medicineId = Integer.parseInt(ctx.pathParam("medicineId"));
+        Medicine medicine = medicineDAO.getById(medicineId);
+
+        if (medicine == null) {
+            ctx.status(HttpStatus.NOT_FOUND);
+            ctx.result("Medicine not found");
+            return;
+        }
+
+        MedicineLogDTO dto = ctx.bodyAsClass(MedicineLogDTO.class);
+        MedicineLog log = MedicineLog.builder()
+                .dose(dto.getDose())
+                .takenAt(dto.getTakenAt())
+                .user(securityDAO.getUserByUsername(userDTO.getUsername()))
+                .medicine(medicine)
+                .build();
+
+        MedicineLog saved = medicineLogDAO.create(log);
+        ctx.status(HttpStatus.CREATED).json(MedicineLogMapper.toDTO(saved));
     }
+
 
     // Update a log (fx ændre dosis)
     public void updateLog(Context ctx) {

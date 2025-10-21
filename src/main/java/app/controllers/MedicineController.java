@@ -1,23 +1,22 @@
 package app.controllers;
 
+import Security.daos.SecurityDAO;
 import app.DAO.MedicineDAO;
 import app.config.HibernateConfig;
 import app.dtos.MedicineDTO;
-import app.dtos.MedicineLogDTO;
 import app.entities.Medicine;
 import app.mappers.MedicineMapper;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import dk.bugelhartmann.UserDTO;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
 import jakarta.persistence.EntityManagerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MedicineController {
     private static final EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
-    private MedicineDAO medicineDAO;
+    private MedicineDAO medicineDAO = new MedicineDAO(emf);
+    private SecurityDAO securityDAO = new SecurityDAO(emf);
 
     public void getAllMedicine(Context ctx){
         List<Medicine> medicines = medicineDAO.getAll();
@@ -38,44 +37,27 @@ public class MedicineController {
         }
     }
 
-    public void creatMedicine(Context ctx) {
-        String body = ctx.body().trim();
-        ObjectMapper mapper = new ObjectMapper();
-
-        try {
-            List<MedicineDTO> dtos;
-
-            // Tjek om det er en liste eller enkelt objekt
-            if (body.startsWith("[")) {
-                dtos = mapper.readValue(body, new TypeReference<List<MedicineDTO>>() {
-                });
-            } else {
-                dtos = List.of(mapper.readValue(body, MedicineDTO.class));
-            }
-
-            List<MedicineDTO> saved = new ArrayList<>();
-            for (MedicineDTO dto : dtos) {
-                Medicine medicine = Medicine.builder()
-                        .name(dto.getName())
-                        .type(dto.getType())
-                        .symptomDescription(dto.getSymptomDescription())
-                        .logs(dto.getLogIds())
-                        .build();
-
-                Medicine persistedMedicine = medicineDAO.creat(medicine);
-                saved.add(MedicineMapper.toDTO(persistedMedicine));
-            }
-
-            if (saved.size() == 1) {
-                ctx.status(201).json(saved.get(0));
-            } else {
-                ctx.status(201).json(saved);
-            }
-
-        } catch (Exception e) {
-            throw new IllegalStateException("Invalid JSON input: " + e.getMessage(), e);
+    public void createMedicine(Context ctx) {
+        UserDTO userDTO = ctx.attribute("user"); // kommer fra SecurityController.authenticate()
+        if (userDTO == null) {
+            ctx.status(HttpStatus.UNAUTHORIZED);
+            ctx.result("User not authenticated");
+            return;
         }
+
+        MedicineDTO dto = ctx.bodyAsClass(MedicineDTO.class);
+
+        Medicine medicine = Medicine.builder()
+                .name(dto.getName())
+                .type(dto.getType())
+                .symptomDescription(dto.getSymptomDescription())
+                .user(securityDAO.getUserByUsername(userDTO.getUsername())) // hent user entity fra DB
+                .build();
+
+        Medicine saved = medicineDAO.create(medicine);
+        ctx.status(HttpStatus.CREATED).json(MedicineMapper.toDTO(saved));
     }
+
 
     public void updateMedicine(Context ctx) {
         try{

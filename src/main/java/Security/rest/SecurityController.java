@@ -24,8 +24,6 @@ public class SecurityController implements ISecurityController{
     ObjectMapper objectMapper = new Utils().getObjectMapper();
     TokenSecurity tokenSecurity = new TokenSecurity();
 
-    /// TODO: implementer alle metoder rigtigt:
-
     @Override
     public Handler login() {
         return (Context ctx) -> {
