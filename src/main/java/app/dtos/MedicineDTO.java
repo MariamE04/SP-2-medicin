@@ -15,7 +15,7 @@ public class MedicineDTO {
     private String name;
     private String type;
     private String symptomDescription;
-    private List<MedicineLog> logIds;
+    private List<Integer> logIds;
 
     public MedicineDTO(int id, String name, String type, String symptomDescription) {
         this.id = id;

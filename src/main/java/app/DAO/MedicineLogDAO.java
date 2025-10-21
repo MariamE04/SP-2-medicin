@@ -51,9 +51,21 @@ public class MedicineLogDAO implements IDAO<MedicineLog, Integer> {
     public boolean delete(Integer id) {
         try (EntityManager em = emf.createEntityManager()) {
             em.getTransaction().begin();
-            MedicineLog toDelete = em.find(MedicineLog.class, id);
-            if (toDelete != null) {
-                em.remove(toDelete);
+            MedicineLog log = em.find(MedicineLog.class, id);
+
+            if (log != null) {
+                // fjern log fra Medicine
+                if (log.getMedicine() != null) {
+                    log.getMedicine().getLogs().remove(log);
+                }
+
+                // fjern log fra User
+                if (log.getUser() != null) {
+                    log.getUser().getLogs().remove(log);
+                }
+
+                // nu kan vi trygt slette loggen
+                em.remove(log);
                 em.getTransaction().commit();
                 return true;
             } else {

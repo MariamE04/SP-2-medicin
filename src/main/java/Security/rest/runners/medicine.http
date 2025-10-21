@@ -1,0 +1,99 @@
+### Medicine Tests
+GET http://localhost:7007/api/medicineTracker/
+
+###
+
+### Create medicine
+POST http://localhost:7007/api/medicineTracker/medicines
+Content-Type: application/json
+
+{
+  "name": "Panodil",
+  "type": "painKiller",
+  "symptomDescription": "smerter",
+  "user": {"username": "mariam"}
+}
+
+###
+
+### Get all medicines
+GET http://localhost:7007/api/medicineTracker/medicines
+
+###
+
+### Get medicine by id
+GET http://localhost:7007/api/medicineTracker/medicines/1
+
+###
+
+### delete medicine by id
+DELETE http://localhost:7007/api/medicineTracker/medicines/2
+
+###
+
+### delete medicine by id
+GET http://localhost:7007/api/medicineTracker/medicines/2
+
+###
+
+### Update medicine by ID
+PUT http://localhost:7007/api/medicineTracker/medicines/1
+Content-Type: application/json
+
+{
+  "name": "Sertralin test",
+  "type": "Antidepressant",
+  "symptomDescription": "Behandling af angst og depression"
+}
+
+###
+
+# =========================
+### MedicineLog Tests
+
+### Create medicineLog
+POST http://localhost:7007/api/medicineTracker/medicineLog
+Content-Type: application/json
+
+{
+  "dose": 25.0,
+  "takenAt": "2025-10-21T11:30:00",
+  "username": "mariam",
+  "medicineName": "Sertralin"
+}
+
+###
+
+### Get all medicineLogs
+GET http://localhost:7007/api/medicineTracker/medicineLog
+
+###
+
+### Get medicineLog by id
+GET http://localhost:7007/api/medicineTracker/medicineLog/1
+
+###
+
+### delete medicineLog by id
+DELETE http://localhost:7007/api/medicineTracker/medicineLog/2
+
+###
+
+### delete medicineLog by id
+GET http://localhost:7007/api/medicineTracker/medicineLog/2
+
+###
+
+### Update medicineLog by ID
+PUT http://localhost:7007/api/medicineTracker/medicineLog/1
+Content-Type: application/json
+
+{
+  "dose": 30.0,
+  "takenAt": "2025-10-21T12:00:00"
+}
+
+###
+
+# =========================
+### User Tests

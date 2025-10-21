@@ -23,7 +23,7 @@ public class Medicine {
     private String type;  // fx antidepressant, painkiller, vitamin
     private String symptomDescription; // fx angst, migraene osv
 
-    @OneToMany(mappedBy = "medicine")
+    @OneToMany(mappedBy = "medicine", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     private List<MedicineLog> logs;
 

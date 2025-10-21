@@ -15,7 +15,7 @@ public class SecurtiyRoutes {
                 post("/login", securityController.login()));
     };
 
-    public static EndpointGroup getSecuredRoutes(){
+    public EndpointGroup getSecuredRoutes(){
         return ()->{
             path("/protected", ()->{
                 get("/user_demo",(ctx)->ctx.json(jsonMapper.createObjectNode().put("msg",  "Hello from USER Protected")),Role.USER);

@@ -1,5 +1,6 @@
 package app.routes;
 
+import Security.rest.SecurtiyRoutes;
 import io.javalin.apibuilder.EndpointGroup;
 
 import static io.javalin.apibuilder.ApiBuilder.get;
@@ -7,16 +8,19 @@ import static io.javalin.apibuilder.ApiBuilder.path;
 
 public class Routes {
 
-    private PoemRoutes poemRoutes = new PoemRoutes();
+    private MedicineRoutes medicineRoutes = new MedicineRoutes();
+    private MedicineLogRoutes medicineLogRoutes = new MedicineLogRoutes();
+    private SecurtiyRoutes securtiyRoutes = new SecurtiyRoutes();
 
     public EndpointGroup getRoutes() {
         return () -> {
             // root endpoint
-            get("/", ctx -> ctx.result("Welcome to Dog API!"));
+            get("/", ctx -> ctx.result("Welcome to Medicine API!"));
 
-            // dog endpoints
-            path("/poems", poemRoutes.getRoutes());
-
+            // endpoints
+            path("/medicines", medicineRoutes.getRoutes());
+            path("/medicineLog", medicineLogRoutes.getRoutes());
+            path("/security", securtiyRoutes::getSecuredRoutes);
         };
     }
 }
