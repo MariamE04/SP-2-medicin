@@ -106,6 +106,8 @@ public class ApplicationConfig {
                     ));
         });
 
+        this.checkSecurityRoles();
+
         this.app.start(port); // starter Javalin på den givne port (binder socket og starter worker-tråde).
         return app; // returnerer Javalin-instansen (praktisk til tests, så man kan stoppe serveren bagefter eller foretage integrationstests).
     }
