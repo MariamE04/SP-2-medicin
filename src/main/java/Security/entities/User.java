@@ -3,9 +3,7 @@ package Security.entities;
 import app.entities.Medicine;
 import app.entities.MedicineLog;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.HashSet;
@@ -15,6 +13,8 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
+@AllArgsConstructor
+@Builder
 
 @Entity
 @Table(name="users")
