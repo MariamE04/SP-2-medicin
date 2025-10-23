@@ -154,3 +154,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIk1hcmlhbSBFbG1pclwiIiwic
 
 
 ###
+
+### A simple get request to the test endpoint. No need for login
+GET {{url}}/api/medicineTracker/auth/test/
