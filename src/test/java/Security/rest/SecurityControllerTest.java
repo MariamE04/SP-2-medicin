@@ -33,12 +33,12 @@ class SecurityControllerTest {
     void registerUser() {
         given()
                 .contentType("application/json")
-                .body("{\"username\":\"mariamTest\",\"password\":\"test123\"}")
+                .body("{\"username\":\"mariamTest1\",\"password\":\"test123\"}")
                 .when()
                 .post("auth/register")
                 .then()
                 .statusCode(201)
-                .body("username", is("mariamTest"))
+                .body("username", is("mariamTest1"))
                 .body("token", notNullValue());
     }
 
