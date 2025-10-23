@@ -1,7 +1,9 @@
 package Security.rest;
 
 import dk.bugelhartmann.UserDTO;
+import io.javalin.http.Context;
 import io.javalin.http.Handler;
+import org.jetbrains.annotations.NotNull;
 
 public interface ISecurityController {
     Handler login(); // to get a token after checking username and password
@@ -12,4 +14,6 @@ public interface ISecurityController {
     //boolean authorize(UserDTO userDTO, Set<String> allowedRoles); // to verify user roles
 
     String createToken(UserDTO user) throws Exception;
+
+    void healthCheck(@NotNull Context context);
 }

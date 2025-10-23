@@ -13,6 +13,7 @@ import dk.bugelhartmann.TokenSecurity;
 import dk.bugelhartmann.UserDTO;
 import io.javalin.http.*;
 import dk.bugelhartmann.TokenVerificationException;
+import org.jetbrains.annotations.NotNull;
 
 import java.text.ParseException;
 import java.util.Set;
@@ -231,6 +232,11 @@ public class SecurityController implements ISecurityController{
     private static boolean userHasAllowedRole(UserDTO user, Set<String> allowedRoles) {
         return user.getRoles().stream()
                 .anyMatch(role -> allowedRoles.contains(role.toUpperCase()));
+    }
+
+    // Health check for the API. Used in deployment
+    public void healthCheck(@NotNull Context ctx) {
+        ctx.status(200).json("{\"msg\": \"API is up and running\"}");
     }
 
 }

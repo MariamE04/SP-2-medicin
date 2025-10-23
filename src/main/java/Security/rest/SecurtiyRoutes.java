@@ -14,6 +14,8 @@ public class SecurtiyRoutes {
         return () -> {
             post("/login", securityController.login());
             post("/register", securityController.register());
+            get("/healthcheck", securityController::healthCheck, Role.ANYONE);
+            get("/test", ctx->ctx.json(jsonMapper.createObjectNode().put("msg",  "Hello from Open Deployment")), Role.ANYONE);
 
         };
     }
