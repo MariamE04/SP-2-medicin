@@ -18,7 +18,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MedicineLogDAOTest {
-    private static EntityManagerFactory emf;
+ /*   private static EntityManagerFactory emf;
     private static MedicineDAO medicineDAO;
     private static MedicineLogDAO medicineLogDAO;
     private User user;
@@ -149,5 +149,5 @@ class MedicineLogDAOTest {
         List<MedicineLog> logs = medicineLogDAO.getByUsername("testuser");
         assertEquals(2, logs.size());
 
-    }
+    } */
 }

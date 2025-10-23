@@ -6,6 +6,7 @@ import app.entities.Medicine;
 import app.entities.MedicineLog;
 import app.utils.Utils;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -113,4 +114,5 @@ public class HibernateConfig {
         props.put("hibernate.hbm2ddl.auto", "create-drop");
         return props;
     }
+
 }
