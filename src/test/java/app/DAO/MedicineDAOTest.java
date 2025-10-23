@@ -38,8 +38,8 @@ class MedicineDAOTest {
 
         try {
             tx.begin();
-            em.createQuery("DELETE FROM Medicine").executeUpdate();
             em.createQuery("DELETE FROM MedicineLog").executeUpdate();
+            em.createQuery("DELETE FROM Medicine").executeUpdate();
             em.createQuery("DELETE FROM User").executeUpdate();
 
             // Opret en testbruger
