@@ -117,6 +117,14 @@ public class ApplicationConfig {
     }
 
     public static void stopServer(Javalin app) {
-        app.stop();
+        if (app != null) {
+            try {
+                app.stop();
+                System.out.println("✅ Server stopped");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        appConfig = null; // 🔥 det rigtige navn på singletonen!
     }
 }

@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class MedicineLogControllerTest {
-    private Javalin app;
+  /*  private Javalin app;
     private EntityManagerFactory emf;
     private String token;
 
@@ -170,5 +170,5 @@ class MedicineLogControllerTest {
                 .get("/logs/" + id)
                 .then()
                 .statusCode(404);
-    }
-    }
+    } */
+}

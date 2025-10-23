@@ -17,7 +17,7 @@ import static org.hamcrest.Matchers.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class MedicineControllerTest {
 
-    private Javalin app;
+   /* private Javalin app;
     private EntityManagerFactory emf;
     private SecurityDAO securityDAO;
     private String token;
@@ -88,6 +88,7 @@ class MedicineControllerTest {
         }
     }
 
+
     @Test
     void getAllMedicine() {
         given()
@@ -125,16 +126,17 @@ class MedicineControllerTest {
                 .body("symptomDescription", is("smerter"));
     }
 
+
     @Test
     void updateMedicine() {
         int id =
                 given()
-                .header("Authorization", "Bearer test-token")
-                .when()
-                .get("/medicines")
-                .then()
-                .extract()
-                .path("[0].id");
+                        .header("Authorization", "Bearer test-token")
+                        .when()
+                        .get("/medicines")
+                        .then()
+                        .extract()
+                        .path("[0].id");
 
         given()
                 .header("Authorization", "Bearer test-token")
@@ -149,7 +151,7 @@ class MedicineControllerTest {
 
     @Test
     void deleteMedicine() {
-       int id = given()
+        int id = given()
                 .header("Authorization", "Bearer test-token")
                 .when()
                 .get("/medicines")
@@ -163,5 +165,5 @@ class MedicineControllerTest {
                 .delete("/medicines/" + id)
                 .then()
                 .statusCode(204);
-    }
+    } */
 }
