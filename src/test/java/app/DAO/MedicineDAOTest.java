@@ -24,12 +24,12 @@ class MedicineDAOTest {
         dao = new MedicineDAO(emf);
     }
 
-    @AfterAll
+   /* @AfterAll
     static void tearDown() {
         if (emf != null) {
             emf.close();
         }
-    }
+    } */
 
     @BeforeEach
     void setUpTestData() {

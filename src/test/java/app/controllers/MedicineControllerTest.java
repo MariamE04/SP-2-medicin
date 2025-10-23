@@ -43,7 +43,7 @@ class MedicineControllerTest {
     }
 
 
-    @AfterAll
+   /* @AfterAll
     void tearDown() {
         ApplicationConfig.stopServer(app);
         if (emf != null) emf.close();
