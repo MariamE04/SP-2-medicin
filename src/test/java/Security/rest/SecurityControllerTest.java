@@ -24,10 +24,10 @@ class SecurityControllerTest {
         RestAssured.basePath = "/api/medicineTracker";
     }
 
-    @AfterAll
+  /*  @AfterAll
     static void tearDown() {
         ApplicationConfig.stopServer(app);
-    }
+    } */
 
     @Test
     void registerUser() {
