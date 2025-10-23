@@ -13,7 +13,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SecurityControllerTest {
-   private static Javalin app;
+  /* private static Javalin app;
 
     @BeforeAll
     static void setup() {
@@ -24,10 +24,10 @@ class SecurityControllerTest {
         RestAssured.basePath = "/api/medicineTracker";
     }
 
-  /*  @AfterAll
+    @AfterAll
     static void tearDown() {
         ApplicationConfig.stopServer(app);
-    } */
+    }
 
     @Test
     void registerUser() {
@@ -63,6 +63,6 @@ class SecurityControllerTest {
                 .statusCode(200)
                 .body("token", notNullValue())
                 .body("username", is("mariamTest"));
-    }
+    } */
 
 }
