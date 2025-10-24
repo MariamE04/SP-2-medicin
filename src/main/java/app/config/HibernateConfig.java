@@ -103,8 +103,10 @@ public class HibernateConfig {
     private static Properties setDevProperties(Properties props){
         String DBName = getDBName();
 
+        // Hvis environment variable CONNECTION_STR ikke er sat, brug db-container navnet
         String connectionStr = System.getenv("CONNECTION_STR");
         if (connectionStr == null) connectionStr = "jdbc:postgresql://localhost:5432/";
+
 
         String username = System.getenv("DB_USERNAME");
         if (username == null) username = "postgres";
