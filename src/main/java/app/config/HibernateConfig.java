@@ -101,11 +101,13 @@ public class HibernateConfig {
     }
 
     private static Properties setDevProperties(Properties props){
-        props.put("hibernate.connection.url", "jdbc:postgresql://localhost:5432/"+ getDBName());
-        props.put("hibernate.connection.username", "postgres");
-        props.put("hibernate.connection.password", "postgres");
+        String DBName = System.getenv("DB_NAME");
+        props.put("hibernate.connection.url", System.getenv("CONNECTION_STR") + DBName);
+        props.put("hibernate.connection.username", System.getenv("DB_USERNAME"));
+        props.put("hibernate.connection.password", System.getenv("DB_PASSWORD"));
         return props;
     }
+
     private static Properties setTestProperties(Properties props) {
         props.put("hibernate.connection.driver_class", "org.testcontainers.jdbc.ContainerDatabaseDriver");
         props.put("hibernate.connection.url", "jdbc:tc:postgresql:16.2:///test_db");
