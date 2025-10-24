@@ -6,7 +6,7 @@ GET http://localhost:7007/api/medicineTracker/
 ### Create medicine
 POST http://localhost:7007/api/medicineTracker/medicines
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIk1hcmlhbSBFbG1pclwiIiwic3ViIjoibWFyaWFtIiwiZXhwIjoxNzYxMjMzOTgzLCJyb2xlcyI6IlVTRVIiLCJ1c2VybmFtZSI6Im1hcmlhbSJ9.PL-P4RbvPMhOkSeUii6ECI_uPq-z0GIZYH7y8TYSsXs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIk1hcmlhbSBFbG1pclwiIiwic3ViIjoibWFyaWFtIiwiZXhwIjoxNzYxMzA2NjU3LCJyb2xlcyI6IlVTRVIiLCJ1c2VybmFtZSI6Im1hcmlhbSJ9.UfcoL4_0qNrsYTEV-h_bDMJnJiTynsWW0tAcTloH1VY
 
 {
   "name": "Panodil",
@@ -19,7 +19,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIk1hcmlhbSBFbG1pclwiIiwic
 
 ### Get all medicines
 GET http://{{url}}/api/medicineTracker/medicines
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIk1hcmlhbSBFbG1pclwiIiwic3ViIjoibWFyaWFtIiwiZXhwIjoxNzYxMjMzOTgzLCJyb2xlcyI6IlVTRVIiLCJ1c2VybmFtZSI6Im1hcmlhbSJ9.PL-P4RbvPMhOkSeUii6ECI_uPq-z0GIZYH7y8TYSsXs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIk1hcmlhbSBFbG1pclwiIiwic3ViIjoibWFyaWFtIiwiZXhwIjoxNzYxMzA2NjU3LCJyb2xlcyI6IlVTRVIiLCJ1c2VybmFtZSI6Im1hcmlhbSJ9.UfcoL4_0qNrsYTEV-h_bDMJnJiTynsWW0tAcTloH1VY
 
 ###
 
@@ -59,7 +59,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIk1hcmlhbSBFbG1pclwiIiwic
 ### Create medicineLog
 POST http://localhost:7007/api/medicineTracker/medicineLog
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIk1hcmlhbSBFbG1pclwiIiwic3ViIjoibWFyaWFtIiwiZXhwIjoxNzYxMTU2NDE3LCJyb2xlcyI6IlVTRVIiLCJ1c2VybmFtZSI6Im1hcmlhbSJ9.xT8Zud86AZ0QapsIfTYMh01y5oKkCYKJ0kg2ysJGazo
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIk1hcmlhbSBFbG1pclwiIiwic3ViIjoibWFyaWFtIiwiZXhwIjoxNzYxMzA2NjU3LCJyb2xlcyI6IlVTRVIiLCJ1c2VybmFtZSI6Im1hcmlhbSJ9.UfcoL4_0qNrsYTEV-h_bDMJnJiTynsWW0tAcTloH1VY
 
 {
   "dose": 25.0,
